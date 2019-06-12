@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView() {
         mIdRuler = findViewById(R.id.id_ruler);
-        mIdRuler.setOnClickListener(this);
         mIdEditText = findViewById(R.id.id_edit_text);
         mIdGotoBtn = findViewById(R.id.id_goto_btn);
         mIdGotoBtn.setOnClickListener(this);
@@ -41,8 +40,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             default:
-                break;
-            case R.id.id_ruler:
                 break;
             case R.id.id_goto_btn:
                 mIdRuler.setFmChannl(Double.valueOf(mIdEditText.getText().toString()));
