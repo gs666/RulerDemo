@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.skyworth.car.rulerdemo.RulerView
+        android:id="@+id/id_ruler"
+        android:background="#252424"
+        android:layout_width="1800px"
+        android:layout_height="174px"
+        android:layout_marginTop="100px"/>
+
+    <EditText
+        android:id="@+id/id_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/id_goto_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开"/>
+
+</LinearLayout>
