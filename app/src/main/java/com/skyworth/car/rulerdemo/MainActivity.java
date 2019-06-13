@@ -12,38 +12,28 @@ import android.widget.EditText;
  * @CreateDate: 2019-06-12 10:18
  * @Email: gaoshuo521@foxmail.com
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
+
     private RulerView mIdRuler;
     private EditText mIdEditText;
-    /**
-     * 打开
-     */
     private Button mIdGotoBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
 
-        mIdRuler.setFmChannl(95.5);
-    }
-
-    private void initView() {
         mIdRuler = findViewById(R.id.id_ruler);
         mIdEditText = findViewById(R.id.id_edit_text);
         mIdGotoBtn = findViewById(R.id.id_goto_btn);
-        mIdGotoBtn.setOnClickListener(this);
-    }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            default:
-                break;
-            case R.id.id_goto_btn:
+        mIdGotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 mIdRuler.setFmChannl(Double.valueOf(mIdEditText.getText().toString()));
-                break;
-        }
+            }
+        });
+
+        mIdRuler.setFmChannl(95.5);
     }
 }
