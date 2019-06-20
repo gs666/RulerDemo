@@ -15,16 +15,17 @@ import android.view.View;
  * @Email: gaoshuo521@foxmail.com
  */
 public class RulerView extends View {
-    public static final int MIN_POSITION = 20;
-    public static final int MAX_POSITION = 1700;
+    public static final int MIN_POSITION = 20;//起始位置
+    public static final int MAX_POSITION = 1700;//结束位置
     private OnMoveActionListener mMove = null;
 
-    private Paint mLinePaint;
-    private Paint mTextPaint;
-    private Paint mRulerPaint;
+    private Paint mLinePaint;//刻度线画笔
+    private Paint mTextPaint;//指示数字画笔
+    private Paint mRulerPaint;//指示线画笔
+
     private float position = 20;
-    private int max = 1080;
-    private int min = 870;
+    private int max = 1080;//FM频道最大值108*10
+    private int min = 870;//FM频道最小值87*10
 
     public RulerView(Context context) {
         super(context);
@@ -56,7 +57,6 @@ public class RulerView extends View {
         mTextPaint.setStrokeWidth(2);
         mTextPaint.setTextSize(24);
 
-        //指示线
         mRulerPaint = new Paint();
         mRulerPaint.setAntiAlias(true);
         mRulerPaint.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -173,10 +173,6 @@ public class RulerView extends View {
         //当滑动刻度尺时，告知父控件不要拦截事件，交给子view处理
         getParent().requestDisallowInterceptTouchEvent(true);
         return super.dispatchTouchEvent(ev);
-    }
-
-    public float getPosition() {
-        return position;
     }
 
     public void setPosition(int i) {
