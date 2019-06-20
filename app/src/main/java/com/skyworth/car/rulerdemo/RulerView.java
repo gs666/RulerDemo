@@ -15,10 +15,14 @@ import android.view.View;
  * @Email: gaoshuo521@foxmail.com
  */
 public class RulerView extends View {
+    public static final int MIN_POSITION = 20;
+    public static final int MAX_POSITION = 1700;
+    private OnMoveActionListener mMove = null;
+
     private Paint mLinePaint;
     private Paint mTextPaint;
     private Paint mRulerPaint;
-    private float progress = 20;
+    private float position = 20;
     private int max = 1080;
     private int min = 870;
 
@@ -129,7 +133,7 @@ public class RulerView extends View {
         canvas.restore();
 
         //绘制指示线
-        canvas.drawLine(progress, 0, progress, 140, mRulerPaint);
+        canvas.drawLine(position, 0, position, 140, mRulerPaint);
         mTextPaint.setTextSize(24);
     }
 
@@ -139,32 +143,68 @@ public class RulerView extends View {
             case MotionEvent.ACTION_DOWN:
                 break;
             case MotionEvent.ACTION_MOVE:
-                //
                 float x = event.getX();
+                if (x < MIN_POSITION) {
+                    setPosition(MIN_POSITION);
+                } else if (x > MAX_POSITION) {
+                    setPosition(MAX_POSITION);
+                } else {
+                    setPosition((int) x);
+                }
                 //移动指示条
-                setProgress((int) x);
-                Log.d("TAG", "progress:" + progress);
+                if (mMove != null) {
+                    mMove.onMove(Double.parseDouble(String.format("%.1f", getFmChannel())));
+                }
+                Log.d("TAG", "position:" + position);
                 Log.d("TAG", "channel:" + getFmChannel());
+            case MotionEvent.ACTION_CANCEL:
+                //只停在0.1(刻度线上)的位置
+                setFmChanel(Double.parseDouble(String.format("%.1f", getFmChannel())));
+                Log.d("停下来后", "channel:" + Double.parseDouble(String.format("%.1f", getFmChannel())));
                 break;
             default:
         }
         return true;
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        //解决刻度尺和viewPager的滑动冲突
+        //当滑动刻度尺时，告知父控件不要拦截事件，交给子view处理
+        getParent().requestDisallowInterceptTouchEvent(true);
+        return super.dispatchTouchEvent(ev);
+    }
 
-    public void setProgress(int i) {
-        progress = i;
+    public float getPosition() {
+        return position;
+    }
+
+    public void setPosition(int i) {
+        position = i;
         invalidate();
     }
 
-    public void setFmChannl(double fmChanel) {
-        int temp = (int)((fmChanel - 87) * 80) + 20;
-        Log.d("TAG",temp+"temp");
-        setProgress(temp);
+    public void setFmChanel(double fmChanel) {
+        int temp = (int) ((fmChanel - 87) * 80) + 20;
+        setPosition(temp);
     }
 
-    public double getFmChannel(){
-        return ((progress - 20.0)/80.0 +87.0);
+    public double getFmChannel() {
+        return ((position - 20.0) / 80.0 + 87.0);
+    }
+
+    /**
+     * 定义监听接口
+     */
+    public interface OnMoveActionListener {
+        void onMove(double x);
+    }
+
+    /**
+     * 为每个接口设置监听器
+     */
+    public void setOnMoveActionListener(OnMoveActionListener move) {
+        mMove = move;
     }
 
 }

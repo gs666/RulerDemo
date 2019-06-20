@@ -10,9 +10,17 @@
     <com.skyworth.car.rulerdemo.RulerView
         android:id="@+id/id_ruler"
         android:background="#252424"
-        android:layout_width="1800px"
+        android:layout_width="1720px"
         android:layout_height="174px"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="100px"/>
+
+    <TextView
+        android:id="@+id/id_current_fm"
+        android:text="当前FM:95.5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"/>
 
     <EditText
         android:id="@+id/id_edit_text"
